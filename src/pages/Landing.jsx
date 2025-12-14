@@ -1,10 +1,11 @@
-// frontend/src/pages/Landing.jsx
 import { Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../App.css'
 import image1 from '../assets/shield.png'
 import image2 from '../assets/phone.png'
 import image3 from '../assets/up2.png'
+import image4 from '../assets/data.png'
+
 
 export default function Landing() {
   const { isAuthenticated } = useAuth();
@@ -14,7 +15,7 @@ export default function Landing() {
   }
 
   return (
-    <div className="min-h-screen bg-mc-light">
+    <div className="min-h-screen bg-mc-light" >
       <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 py-10 lg:flex-row">
         <div className="flex-1">
           <div className="mb-6 flex items-center space-x-2">
@@ -31,13 +32,13 @@ export default function Landing() {
           <div className="flex space-x-4">
             <Link
               to="/register"
-              className="rounded-full bg-mc-green px-6 py-2 text-xl font-semibold text-white hover:opacity-90"
+              className="rounded-full bg-mc-green px-6 py-2 text-xl font-semibold text-white hover:opacity-90 hover:bg-transparent hover:border border-mc-green hover:text-mc-green transition-all duration-200"
             >
               Mulai Sekarang
             </Link>
             <Link
               to="/login"
-              className="rounded-full border border-mc-green px-6 py-2 text-xl font-semibold text-mc-green hover:bg-white"
+              className="rounded-full border border-mc-green px-6 py-2 text-xl font-semibold text-mc-green hover:bg-mc-green hover:text-white transition-all duration-200"
             >
               Login
             </Link>
@@ -67,10 +68,11 @@ export default function Landing() {
 
           <div className="flex flex-col justify-center items-center gap-8">
               <h1 className='font-bold text-5xl text-white bg-mc-green p-5 rounded-2xl font-Noto'>Kenapa Kami</h1>
-              <div className="flex flex-row justify-center gap-8">
+              <div className="flex flex-col justify-center gap-8 lg:flex-row">
                   <Feature title="Aman & Privat" desc="Data terenkripsi dan aman" img = {image1}/>
                   <Feature title="Responsive" desc="Akses di laptop & smartphone" img = {image2}/>
                   <Feature title="Laporan Detail" desc="Tracking pengeluaran lengkap" img = {image3}/>
+                  <Feature title="Visualisasi Data" desc="Pie chart interaktif" img = {image4}/>
               </div>
                  
           </div>

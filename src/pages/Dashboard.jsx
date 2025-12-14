@@ -1,4 +1,3 @@
-// frontend/src/pages/Dashboard.jsx
 import { useEffect, useState } from 'react';
 import api from '../utils/api';
 import StatCard from '../components/StatCard';
@@ -8,6 +7,9 @@ import '../App.css'
 import image1 from '../assets/up.png'
 import image2 from '../assets/down.png'
 
+
+import FinancePie from '../components/Chart.jsx';
+
 export default function Dashboard() {
   const [summary, setSummary] = useState(null);
   const [recent, setRecent] = useState([]);
@@ -16,7 +18,7 @@ export default function Dashboard() {
     async function fetchData() {
       const [sRes, rRes] = await Promise.all([
         api.get('/dashboard/summary'),
-        api.get('/transactions/recent?limit=5')
+        api.get('/transactions/recent?limit=10')
       ]);
       setSummary(sRes.data);
       setRecent(rRes.data);
@@ -30,7 +32,6 @@ export default function Dashboard() {
     <div>
       <h1 className="mb-6 text-2xl font-semibold">Dashboard Keuangan</h1>
 
-      
       <div className="mb-6 grid gap-4 md:grid-cols-3">
         <StatCard
           label="Total Saldo"
@@ -49,6 +50,8 @@ export default function Dashboard() {
           img={image2}
         />
       </div>
+
+      <FinancePie/>
 
       <Link to = "/pendapatan">
           <button className="mb-6 mr-3 rounded-lg bg-mc-green px-4 py-2 text-sm font-semibold text-white hover:bg-transparent hover:border border-mc-green hover:text-mc-green transition-all duration-150">
@@ -73,7 +76,7 @@ export default function Dashboard() {
               className="flex items-center justify-between rounded-xl bg-white px-4 py-2 text-sm"
             >
               <div>
-                <div className="font-medium">{t.description || t.category}</div>
+                <div className="text-xl">{t.description || t.category}</div>
                 <div className="text-xs text-slate-500">
                   {t.type === 'INCOME' ? 'Pendapatan' : 'Pengeluaran'} •{' '}
                   {new Date(t.date).toLocaleDateString('id-ID')}
@@ -82,8 +85,8 @@ export default function Dashboard() {
               <div
                 className={
                   t.type === 'INCOME'
-                    ? 'font-semibold text-emerald-500'
-                    : 'font-semibold text-red-500'
+                    ? 'font-semibold text-emerald-500 text-xl'
+                    : 'font-semibold text-red-500 text-xl'
                 }
               >
                 {t.type === 'INCOME' ? '+' : '-'} Rp {formatNumber(t.amount)}
