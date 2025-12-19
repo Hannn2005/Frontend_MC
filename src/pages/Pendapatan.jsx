@@ -88,7 +88,7 @@ export default function Pendapatan() {
     try {
       setSubmitting(true)
 
-      await api.put(/transactions/${editingId}, {
+      await api.put(`/transactions/${editingId}`, {
         ...form,
         amount: Number(form.amount)
       })
@@ -111,7 +111,7 @@ export default function Pendapatan() {
     try {
       setSubmitting(true)
 
-      await api.delete(/transactions/${editingId})
+      await api.delete(`/transactions/${editingId}`)
       alert('Pendapatan berhasil dihapus')
       closeModal()
       load()
