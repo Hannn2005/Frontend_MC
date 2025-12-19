@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import api from '../utils/api'
 import '../App.css'
+import { NumericFormat } from "react-number-format";
 
 
 export default function Pendapatan() {
@@ -87,7 +88,7 @@ export default function Pendapatan() {
     try {
       setSubmitting(true)
 
-      await api.put(`/transactions/${editingId}`, {
+      await api.put(/transactions/${editingId}, {
         ...form,
         amount: Number(form.amount)
       })
@@ -110,7 +111,7 @@ export default function Pendapatan() {
     try {
       setSubmitting(true)
 
-      await api.delete(`/transactions/${editingId}`)
+      await api.delete(/transactions/${editingId})
       alert('Pendapatan berhasil dihapus')
       closeModal()
       load()
@@ -177,9 +178,24 @@ export default function Pendapatan() {
         onSubmit={handleSubmit}
         className="mb-6 grid gap-3 rounded-xl bg-white p-4 shadow-sm md:grid-cols-5"
       >
-        <input name="category" value={form.category} onChange={handleChange} placeholder="Kategori" className="rounded border px-3 py-2 text-sm" />
+        <input name="category" value={form.category} onChange={handleChange} placeholder="Judul" className="rounded border px-3 py-2 text-sm" />
         <input name="description" value={form.description} onChange={handleChange} placeholder="Deskripsi" className="rounded border px-3 py-2 text-sm" />
-        <input name="amount" type="number" value={form.amount} onChange={handleChange} placeholder="Jumlah" className="rounded border px-3 py-2 text-sm" />
+        <NumericFormat
+            name="amount"
+            value={form.amount}
+            thousandSeparator="."
+            decimalSeparator=","
+            prefix="Rp "
+            allowNegative={false}
+            placeholder="Rp 0"
+            onValueChange={(values) => {
+              setForm({
+                ...form,
+                amount: values.value, 
+              });
+            }}
+            className="rounded border px-3 py-2 text-sm"
+          />
         <input name="date" type="date" value={form.date} onChange={handleChange} className="rounded border px-3 py-2 text-sm" />
 
         <button
@@ -241,7 +257,22 @@ export default function Pendapatan() {
             <form onSubmit={handleUpdate} className="space-y-3">
               <input name="category" value={form.category} onChange={handleChange} className="w-full rounded border px-3 py-2 text-sm" />
               <input name="description" value={form.description} onChange={handleChange} className="w-full rounded border px-3 py-2 text-sm" />
-              <input name="amount" type="number" value={form.amount} onChange={handleChange} className="w-full rounded border px-3 py-2 text-sm" />
+               <NumericFormat
+                  name="amount"
+                  value={form.amount}
+                  thousandSeparator="."
+                  decimalSeparator=","
+                  prefix="Rp "
+                  allowNegative={false}
+                  placeholder="Rp 0"
+                  onValueChange={(values) => {
+                    setForm({
+                      ...form,
+                      amount: values.value, 
+                    });
+                  }}
+                  className="w-full rounded border px-3 py-2 text-sm"
+              />
               <input name="date" type="date" value={form.date} onChange={handleChange} className="w-full rounded border px-3 py-2 text-sm" />
 
               <div className="flex justify-between items-center pt-4">
